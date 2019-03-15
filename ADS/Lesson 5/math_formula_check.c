@@ -220,6 +220,8 @@ ErrorsList_t ToPostfixNotation(char * infixBuffer, unsigned int length, char * p
                     if (algOper > NO_ERROR) {
                         *(postfixBuffer++) = algOper;
                         *(postfixBuffer++) = ' ';
+                    } else {
+                        error = (ErrorsList_t)algOper;
                     }
 
                     break;
