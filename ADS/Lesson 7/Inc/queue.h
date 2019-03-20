@@ -28,17 +28,17 @@ typedef struct {
 typedef enum {
     ERROR_QUEUE_MEMORY_ALLOC = -3, /*!< Невозможно выделить память */
     ERROR_QUEUE_IS_FULL      = -2, /*!< Переполнение очереди */
-    QUEUE_IS_EMPTY           = -1, /*!< Очередь пуста */
+    ERROR_QUEUE_IS_EMPTY     = -1, /*!< Очередь пуста */
     NO_ERROR                 = 0,  /*!< Нет ошибок */
 } QueueErrorsList_t;
 
 
 void InitQueue(Queue_t * q, unsigned int maxSize);
-QueueErrorsList_t QueueIsEmpty(Queue_t * q);
 QueueErrorsList_t AddNode(Queue_t * q, int x);
 void PrintQueue(Queue_t * q);
 QueueErrorsList_t DeleteFrontNode(Queue_t * q);
 QueueErrorsList_t PopFrontNode(Queue_t * q, int * value);
+void ClearQueue(Queue_t * q);
 int ViewFront(Queue_t * q);
 
 /* C++ detection */

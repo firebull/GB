@@ -21,9 +21,7 @@
 int main (int argc, char * argv[]) {
 
     Queue_t queue;
-    int startNode;
-
-    InitQueue(&queue, 100);  // FIXME
+    int startNode = -1;
 
     if (argc == 1) {
         puts("No file(s) specified in command line");
@@ -68,7 +66,89 @@ int main (int argc, char * argv[]) {
         exit(1);
     }
 
+    int count, maxWeight; /*!< Количество записей */
+
+    // Считываем количество записей
+    if (fscanf(file, "%d %d", &count, &maxWeight) <= 0 ) {
+        puts("Incorrect file format");
+        exit(1);
+    }
+
+    if (count <= 0 || maxWeight <= 0) {
+        puts("Incorrect input data");
+        exit(1);
+    }
+
+    //@fixme: Добавить проверку, чтобы в командной строке был
+    //        задан стартовый узел не больше count и > 0
+
+    int matrix[count][count];
+    int weight = 0;
+
+    for (int i = 0; i < count; ++i) {
+        for (int j = 0; j < count; ++j) {
+            if (fscanf(file, "%d", &weight) <= 0 ) {
+                puts("Incorrect file format");
+                exit(1);
+            }
+
+            if (weight < 0) {
+                puts("Can't use weght less then zero");
+                exit(1);
+            }
+
+            matrix[i][j] = weight;
+        }
+    }
 
     fclose(file);
+
+    for (int i = 0; i < count; ++i) {
+        for (int j = 0; j < count; ++j) {
+            if (matrix[i][j] == maxWeight) {
+                printf("  -\t");
+            } else {
+                printf("  %d\t", matrix[i][j]);
+            }
+        }
+
+        puts("\n");
+    }
+
+    int pathLen[count];
+
+    for (int i = 0; i < count; ++i) {
+        pathLen[i] = maxWeight;
+    }
+
+    InitQueue(&queue, count * count); // Размер очереди на размер матрицы
+
+    AddNode(&queue, --startNode);
+
+    pathLen[startNode] = 0;
+    int workNode = startNode;
+    unsigned int currentLength = 0;
+
+    while (queue.size > 0) {
+        if (PopFrontNode(&queue, &workNode) != NO_ERROR) {
+            exit(1);
+        }
+
+        for (int i = 0; i < count; ++i) {
+            if (matrix[workNode][i] < maxWeight) {
+                currentLength = pathLen[workNode] + matrix[workNode][i];
+
+                if (pathLen[i] >= currentLength) {
+
+                    AddNode(&queue, i);
+                    pathLen[i] = currentLength;
+                    printf("node => %02d, it min length => %d\n", i + 1, pathLen[i]);
+                }
+            }
+        }
+    }
+
+    ClearQueue(&queue);
+
     return 0;
 }

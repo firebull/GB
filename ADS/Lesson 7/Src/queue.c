@@ -25,20 +25,6 @@ void InitQueue(Queue_t * q, unsigned int maxSize) {
 }
 
 /**
- * @brief Проверка пустоты очереди
- *
- * @param  q Указатель на очередь
- * @return   Состояние или ошибку из списка QueueErrorsList_t
- */
-QueueErrorsList_t QueueIsEmpty(Queue_t * q) {
-    if (q->front == NULL) {
-        return QUEUE_IS_EMPTY;
-    } else {
-        return NO_ERROR;
-    }
-}
-
-/**
  * @brief Добавление элемента в очередь
  *
  * @param q   Указатель на очередь
@@ -57,6 +43,7 @@ QueueErrorsList_t AddNode(Queue_t * q, int val) {
     }
 
     tmp->field = val;
+    tmp->next = NULL;
 
     if ((q->rear == NULL) && (q->front == NULL)) {
         q->rear = tmp;
@@ -79,15 +66,13 @@ QueueErrorsList_t AddNode(Queue_t * q, int val) {
 void PrintQueue(Queue_t * q) {
     struct Node_t * node;
 
-    if (QueueIsEmpty(q) == QUEUE_IS_EMPTY) {
+    if (q->size == 0) {
         return;
     }
 
     for (node = q->front; node != NULL; node = node->next) {
         printf(" %d ", node->field);
     }
-
-    return;
 }
 
 /**
@@ -97,10 +82,10 @@ void PrintQueue(Queue_t * q) {
  * @return   Состояние или ошибку из списка QueueErrorsList_t
  */
 QueueErrorsList_t DeleteFrontNode(Queue_t * q) {
-    struct Node_t * tmp;
+    Node_t * tmp;
 
-    if (QueueIsEmpty(q) == QUEUE_IS_EMPTY) {
-        return QUEUE_IS_EMPTY;
+    if (q->size == 0) {
+        return ERROR_QUEUE_IS_EMPTY;
     }
 
     tmp = q->front;
@@ -109,6 +94,10 @@ QueueErrorsList_t DeleteFrontNode(Queue_t * q) {
         q->front = q->front->next;
         free(tmp);
         q->size--;
+    }
+
+    if (q->size == 0) {
+        q->rear = NULL;
     }
 
     return NO_ERROR;
@@ -123,13 +112,28 @@ QueueErrorsList_t DeleteFrontNode(Queue_t * q) {
  */
 QueueErrorsList_t PopFrontNode(Queue_t * q, int * value) {
 
-    if (QueueIsEmpty(q) == QUEUE_IS_EMPTY) {
-        return QUEUE_IS_EMPTY;
+    if (q->size == 0) {
+        return ERROR_QUEUE_IS_EMPTY;
     }
 
     *value = q->front->field;
 
     return DeleteFrontNode(q);
+}
+
+/**
+ * @brief Очистка всей очереди
+ *
+ * @param q Указатель на очередь
+ */
+void ClearQueue(Queue_t * q) {
+    while (q->front != NULL) {
+        Node_t * temp = q->front;
+        q->front = q->front->next;
+        free(temp);
+    }
+
+    q->size = 0;
 }
 
 /**
