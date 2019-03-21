@@ -43,10 +43,10 @@ QueueErrorsList_t AddNode(Queue_t * q, int val) {
     }
 
     tmp->field = val;
-    tmp->next = NULL;
+    tmp->next  = NULL;
 
     if ((q->rear == NULL) && (q->front == NULL)) {
-        q->rear = tmp;
+        q->rear  = tmp;
         q->front = q->rear;
     } else {
         q->rear->next = tmp;
@@ -56,6 +56,24 @@ QueueErrorsList_t AddNode(Queue_t * q, int val) {
     q->size++;
 
     return NO_ERROR;
+}
+
+/**
+ * @brief Забрать первый элемент очереди
+ * @param  q     Указатель на очередь
+ * @param  value Указатель на переменную, куда
+ *               положить значение  извлекаемого узла
+ * @return       Состояние или ошибку из списка QueueErrorsList_t
+ */
+QueueErrorsList_t PopFrontNode(Queue_t * q, int * value) {
+
+    if (q->size == 0) {
+        return ERROR_QUEUE_IS_EMPTY;
+    }
+
+    *value = q->front->field;
+
+    return DeleteFrontNode(q);
 }
 
 /**
@@ -71,7 +89,13 @@ void PrintQueue(Queue_t * q) {
     }
 
     for (node = q->front; node != NULL; node = node->next) {
-        printf(" %d ", node->field);
+        printf("%d", node->field);
+
+        if (node->next != NULL) {
+            printf(" => ");
+        } else {
+            printf("\n");
+        }
     }
 }
 
@@ -103,23 +127,6 @@ QueueErrorsList_t DeleteFrontNode(Queue_t * q) {
     return NO_ERROR;
 }
 
-/**
- * @brief Забрать первый элемент очереди
- * @param  q     Указатель на очередь
- * @param  value Указатель на переменную, куда
- *               положить значение  извлекаемого узла
- * @return       Состояние или ошибку из списка QueueErrorsList_t
- */
-QueueErrorsList_t PopFrontNode(Queue_t * q, int * value) {
-
-    if (q->size == 0) {
-        return ERROR_QUEUE_IS_EMPTY;
-    }
-
-    *value = q->front->field;
-
-    return DeleteFrontNode(q);
-}
 
 /**
  * @brief Очистка всей очереди
@@ -129,6 +136,7 @@ QueueErrorsList_t PopFrontNode(Queue_t * q, int * value) {
 void ClearQueue(Queue_t * q) {
     while (q->front != NULL) {
         Node_t * temp = q->front;
+
         q->front = q->front->next;
         free(temp);
     }
