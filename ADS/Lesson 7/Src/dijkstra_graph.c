@@ -31,7 +31,7 @@ int main (int argc, char * argv[]) {
 
     if (argc == 1) {
         puts("No file(s) specified in command line");
-        puts("Print \"dijkstra_graph.run -h\" for help");
+        puts("Print \"dijkstra_graph.exe -h\" for help");
         return 1;
     }
 
@@ -43,7 +43,7 @@ int main (int argc, char * argv[]) {
     while ((opt = getopt(argc, argv, "f:s:e:h")) != -1) {
         switch (opt) {
             case 'h':
-                puts("USAGE: dijkstra_graph.run [options] -f <filename> -s <start> -e <end>\n");
+                puts("USAGE: dijkstra_graph.exe [options] -f <filename> -s <start> -e <end>\n");
                 puts("-f <filename>\tFilename to parse");
                 puts("-s\t\t<start_node>");
                 puts("-e\t\t<end_node>");
