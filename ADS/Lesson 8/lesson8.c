@@ -43,10 +43,39 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
+#include <sys/time.h>
 
 #define SWAP(A, B) { unsigned int t = A; A = B; B = t; }
 
 unsigned long recurCounter = 0; /*!< Счётчик для рекурсивных функций */
+
+struct timeval tv1, tv2, dtv;
+struct timezone tz;
+
+/** @brief Запоминаем в глобальных переменных текущее время
+ *         Фактически запускаем таймер
+ */
+void TimerStart() {
+    gettimeofday(&tv1, &tz);
+}
+
+/** @brief Рассчитываем время, прошедшее с момента запуска TimerStart()
+ *
+ * @return Время в мкс
+ */
+long TimerStop() {
+    gettimeofday(&tv2, &tz);
+    dtv.tv_sec = tv2.tv_sec - tv1.tv_sec;
+    dtv.tv_usec = tv2.tv_usec - tv1.tv_usec;
+
+    if (dtv.tv_usec < 0) {
+        dtv.tv_sec--;
+        dtv.tv_usec += 1000000;
+    }
+
+    return dtv.tv_sec * 1000 + dtv.tv_usec / 1000;
+}
+
 
 /**
  * @brief Простая пузырьковая сортировка
@@ -365,40 +394,52 @@ int main (int argc, const char * argv[]) {
 
     /* Проверка обычной Пузырьковой сортировки */
     // Перед началом инициализирую рабочий массив из базового
-    //memcpy(sortingArray, basicArray, arraySize);
+    memcpy(sortingArray, basicArray, arraySize);
 
-    //printf("Simple bubble sort of %u-length array: %lu operations\n", arrayLength, SimpleBubbleSort(sortingArray, (size_t)arrayLength));
+    TimerStart();
+    printf("Simple bubble sort of %u-length array: %lu operations\n", arrayLength, SimpleBubbleSort(sortingArray, (size_t)arrayLength));
+    printf("Time passed: %.03f sec\n", (float)(TimerStop()/1000.0f));
 
     /* Проверка оптимизированной пузырьковой сортировки */
-    //memcpy(sortingArray, basicArray, arraySize);
+    memcpy(sortingArray, basicArray, arraySize);
 
-    //printf("Optimized bubble sort of %u-length array: %lu operations\n", arrayLength, OptBubbleSort(sortingArray, (size_t)arrayLength));
+    TimerStart();
+    printf("Optimized bubble sort of %u-length array: %lu operations\n", arrayLength, OptBubbleSort(sortingArray, (size_t)arrayLength));
+    printf("Time passed: %.03f sec\n", (float)(TimerStop()/1000.0f));
 
     /* Проверка шейкерной сортировки */
-   // memcpy(sortingArray, basicArray, arraySize);
+    memcpy(sortingArray, basicArray, arraySize);
 
-    //printf("Shake sort of %u-length array: %lu operations\n", arrayLength, ShakeSort(sortingArray, (size_t)arrayLength));
+    TimerStart();
+    printf("Shake sort of %u-length array: %lu operations\n", arrayLength, ShakeSort(sortingArray, (size_t)arrayLength));
+    printf("Time passed: %.03f sec\n", (float)(TimerStop()/1000.0f));
 
     /* Проверка сортировки подсчётом */
     memcpy(sortingArray, basicArray, arraySize);
 
+    TimerStart();
     printf("Counting sort of %u-length array: %lu operations\n", arrayLength, SimpleCountingSort(sortingArray, (size_t)arrayLength, 0xFFFF));
+    printf("Time passed: %.06f sec\n", (float)(TimerStop()/1000000.0f));
 
     /* Проверка быстрой сортировки */
     memcpy(sortingArray, basicArray, arraySize);
 
+    TimerStart();
     QuickSort(sortingArray, 0, arrayLength - 1);
 
     printf("Quick sort of %u-length array: %lu operations\n", arrayLength, recurCounter);
+    printf("Time passed: %.03f sec\n", (float)(TimerStop()/1000.0f));
 
     /* Проверка сортировки слиянием */
     memcpy(sortingArray, basicArray, arraySize);
 
     recurCounter = 0;
 
+    TimerStart();
     MergeSort(sortingArray, 0, arrayLength - 1);
 
     printf("Merge sort of %u-length array: %lu operations\n", arrayLength, recurCounter);
+    printf("Time passed: %.03f sec\n", (float)(TimerStop()/1000.0f));
 
     // Дебаг результата
     /*for (int i = 0; i < arrayLength; ++i) {
