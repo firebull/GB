@@ -29,11 +29,11 @@
  *       Для Быстрой, слиянием и сортировки подсчётом:
  *
  *       Show[
- *           ListLinePlot[{{10, 46}, {100, 1000}, {1000, 15000}, {5000, 94500}, {10000, 221000}}, PlotStyle -> {Red}, InterpolationOrder -> 2,
+ *           ListLinePlot[{{10, 46}, {100, 1000}, {1000, 15000}, {5000, 94500}, {10000, 221000}, {500000, 14670000}, {1000000, 30648000}}, PlotStyle -> {Red}, InterpolationOrder -> 2,
  *                   PlotLegends -> LineLegend[{Red, Green, Orange, Blue},
  *                                             {"Quick Sort", "Merge Sort", "Counting Sort", "O(x*log(x))"}]],
- *           ListLinePlot[{{10, 138}, {100, 2400}, {1000, 34000}, {5000, 205000}, {10000, 440000}}, PlotStyle -> {Green}, InterpolationOrder -> 2],
- *           ListLinePlot[{{10, 131090}, {100, 131270}, {1000, 133070}, {5000, 141070}, {10000, 151000}}, PlotStyle -> {Orange}, InterpolationOrder -> 2],
+ *           ListLinePlot[{{10, 138}, {100, 2400}, {1000, 34000}, {5000, 205000}, {10000, 440000}, {500000, 30500000}, {1000000, 63850000}}, PlotStyle -> {Green}, InterpolationOrder -> 2],
+ *           ListLinePlot[{{10, 131090}, {100, 131270}, {1000, 133070}, {5000, 141070}, {10000, 151000}, {500000, 1131000}, {1000000, 2131000}}, PlotStyle -> {Orange}, InterpolationOrder -> 2],
  *           Plot[x*Log[x], {x, 0, 10000}, PlotStyle -> {Blue}]]
  *
  */
@@ -365,19 +365,19 @@ int main (int argc, const char * argv[]) {
 
     /* Проверка обычной Пузырьковой сортировки */
     // Перед началом инициализирую рабочий массив из базового
-    memcpy(sortingArray, basicArray, arraySize);
+    //memcpy(sortingArray, basicArray, arraySize);
 
-    printf("Simple bubble sort of %u-length array: %lu operations\n", arrayLength, SimpleBubbleSort(sortingArray, (size_t)arrayLength));
+    //printf("Simple bubble sort of %u-length array: %lu operations\n", arrayLength, SimpleBubbleSort(sortingArray, (size_t)arrayLength));
 
     /* Проверка оптимизированной пузырьковой сортировки */
-    memcpy(sortingArray, basicArray, arraySize);
+    //memcpy(sortingArray, basicArray, arraySize);
 
-    printf("Optimized bubble sort of %u-length array: %lu operations\n", arrayLength, OptBubbleSort(sortingArray, (size_t)arrayLength));
+    //printf("Optimized bubble sort of %u-length array: %lu operations\n", arrayLength, OptBubbleSort(sortingArray, (size_t)arrayLength));
 
     /* Проверка шейкерной сортировки */
-    memcpy(sortingArray, basicArray, arraySize);
+   // memcpy(sortingArray, basicArray, arraySize);
 
-    printf("Shake sort of %u-length array: %lu operations\n", arrayLength, ShakeSort(sortingArray, (size_t)arrayLength));
+    //printf("Shake sort of %u-length array: %lu operations\n", arrayLength, ShakeSort(sortingArray, (size_t)arrayLength));
 
     /* Проверка сортировки подсчётом */
     memcpy(sortingArray, basicArray, arraySize);
