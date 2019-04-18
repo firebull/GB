@@ -100,7 +100,7 @@ int main (int argc, char ** args) {
     Power power;
 
     long int a = 0;  /*!< Что возводим в степень */
-    int b = 1;
+    int b = 1;       /*!< Степень числа */
 
     std::cout << "Print integer number to get power of: ";
     std::cin >> a;
