@@ -34,28 +34,28 @@ class Person {
     Person(std::string n = "", int a = 0, Sex s = SEX_UNDEFINED, float w = 0) : name(n), age(a), sex(s), weight(w) {}
 
     /** Изменить имя */
-    Person &SetName(std::string n){
+    Person &SetName(std::string n) {
         name = n;
 
         return *this;
     }
 
     /** Изменить возраст */
-    Person &SetAge(unsigned age){
+    Person &SetAge(unsigned age) {
         this->age = age;
 
         return *this;
     }
 
     /** Изменить пол */
-    Person &SetSex(Sex s){
+    Person &SetSex(Sex s) {
         sex = s;
 
         return *this;
     }
 
     /** Изменить вес */
-    Person &SetWeight(float w){
+    Person &SetWeight(float w) {
         weight = w;
 
         return *this;
@@ -68,19 +68,19 @@ class Student: public Person {
   public:
     Student(std::string n = "-", int a = 0, Sex s = SEX_UNDEFINED, float w = 0, unsigned y = 2019) : Person(n, a, s, w), sYear(y) {}
 
-    void PrintData(){
+    void PrintData() const {
         std::cout << name << ", " << age << " years old, of " << weight << "kg, " << sexNames[sex] << ", started at " << sYear << std::endl;
     }
 
     /** Изменить год обучения */
-    Student &SetStudYear(unsigned y){
+    Student &SetStudYear(unsigned y) {
         sYear = y;
 
         return *this;
     }
 
     /** Увеличить год обучения на 1 */
-    Student &IncStudYear(){
+    Student &IncStudYear() {
         sYear++;
 
         return *this;
