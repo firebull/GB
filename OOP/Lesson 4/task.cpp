@@ -21,7 +21,7 @@
 #define SWAP(A, B) { int t = A; A = B; B = t; }
 
 class ArrayInt {
-  private:
+  protected:
     int m_length;
     int * m_data;
 
@@ -155,7 +155,7 @@ class ArrayInt {
         }
 
         // Вставляем новый элемент в новый массив
-        data [index] = value;
+        data[index] = value;
 
         // Копируем все значения после вставляемого элемента
         for (int after = index; after < m_length; ++after) {
@@ -208,6 +208,13 @@ class ArrayInt {
     /** Удаляет последний элемент массива */
     ArrayInt & pop_back() {
         del_element(m_length - 1);
+
+        return *this;
+    }
+
+    /** Удаляет первый элемент массива */
+    ArrayInt & pop_front() {
+        del_element(0);
 
         return *this;
     }
@@ -278,8 +285,51 @@ class ArrayInt {
     }
 };
 
-int main (int argc, char ** args) {
+class QueueInt : public ArrayInt{
+  private:
+  public:
+    QueueInt() : ArrayInt() {};
 
+    QueueInt(int length) : ArrayInt(length) {}
+
+    /**
+     * @brief Добавить элемент в конец очереди
+     *
+     * @param x Новый элемент
+     */
+    void push(int x) {
+        push_back(x);
+    }
+    /** Возвращает количество элементов в очереди */
+    int size() {
+        return m_length;
+    }
+
+    /** Возвращает первый элемент в очереди */
+    int front() {
+        if (m_length == 0){
+            return 0;
+        }
+
+        return m_data[0];
+    }
+
+    /** Возвращает последний элемент в очереди */
+    int back() {
+        if (m_length == 0){
+            return 0;
+        }
+
+        return m_data[m_length - 1];
+    }
+
+    /** Удаляет первый элемент в очереди */
+    void pop() {
+        pop_front();
+    }
+};
+
+void Task1() {
     ArrayInt arr1;
 
     arr1.push_back(1);
@@ -301,6 +351,47 @@ int main (int argc, char ** args) {
 
     arr1.del_element(0);
     arr1.pop_back().print();
+}
+
+void Task2() {
+    QueueInt myQueue; // создаем пустую очередь
+
+    // добавили в очередь несколько элементов
+    myQueue.push(1);
+    myQueue.push(2);
+    myQueue.push(3);
+
+    std::cout << "Количество элементов в очереди: " << myQueue.size();
+    std::cout << "\nВот первый: " << myQueue.front() << "\nВот последний: " << myQueue.back();
+
+    myQueue.pop();     // удаляем один элемент в очереди
+    std::cout << "\nКоличество элементов в очереди: " << myQueue.size();
+    std::cout << "\nВот первый: " << myQueue.front() << "\nВот последний: " << myQueue.back() << std::endl;
+}
+
+int main (int argc, char ** args) {
+
+    int taskNo = 0;
+
+    std::cout << "Print number of task (1 or 2): ";
+
+    std::cin >> taskNo;
+
+    switch (taskNo) {
+        case 1:
+            Task1();
+
+            break;
+
+        case 2:
+            Task2();
+
+            break;
+
+        default:
+            std::cout << "Incorrect number" << std::endl;
+            return 1;
+    }
 
     return 0;
 }
