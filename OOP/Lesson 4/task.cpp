@@ -338,6 +338,9 @@ void Task1() {
     arr1.push_back(4);
     arr1.push_back(5);
 
+    std::cout << "Current array: " << std::endl;
+    arr1.print();
+
     int *arr2 = new int[3];
     arr2[0] = 10;
     arr2[1] = 11;
@@ -345,10 +348,13 @@ void Task1() {
 
     arr1.insert_array(arr2, 3, 2);
 
+    std::cout << "\nArray with another inserted: " << std::endl;
     arr1.print();
 
+    std::cout << "\nSorted array: " << std::endl;
     arr1.sort().print();
 
+    std::cout << "\nSorted array without first and last elements: " << std::endl;
     arr1.del_element(0);
     arr1.pop_back().print();
 }
