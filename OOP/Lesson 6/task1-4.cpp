@@ -1,8 +1,10 @@
 /**
- * @file    task1.cpp
+ * @file    task1-4.cpp
  * @brief   Тестируем вирутальные функции и перегрузку операций
  *
- * @note    Добавить перегрузку операторов ввода-вывода для класса Fraction
+ * @note    Задание №1: Добавить перегрузку операторов ввода-вывода для класса Fraction
+ *          Задание №4: Создать собственный манипулятор endll для стандартного потока
+ *                      вывода, который выводит два перевода строки и сбрасывает буфер.
  *
  * @note    1. Создать абстрактный класс Fraction (дробь).
  *          2. От него наследуют два класса: SimpleFraction (обыкновенная дробь)
@@ -47,9 +49,9 @@ class Fraction {
 
         return resFraction;
     }
+
+    friend std::ostream& endll(std::ostream &out);
 };
-
-
 
 class SimpleFraction : public Fraction {
   protected:
@@ -176,9 +178,9 @@ class SimpleFraction : public Fraction {
 
     friend std::ostream& operator<< (std::ostream &out, const SimpleFraction &fraction);
     friend std::istream& operator>> (std::ostream &in, const SimpleFraction &fraction);
-
 };
 
+/** Перегрузка оператора вывода для печати дроби */
 std::ostream& operator<< (std::ostream &out, const SimpleFraction &fraction) {
 
     if (fraction.sign < 0) {
@@ -190,6 +192,7 @@ std::ostream& operator<< (std::ostream &out, const SimpleFraction &fraction) {
     return out;
 }
 
+/** Перегрузка оператора ввода для парсинга дроби */
 std::istream& operator>> (std::istream &in, SimpleFraction &fraction) {
 
     int sign = 1, n = 0, d = 1;
@@ -207,6 +210,16 @@ std::istream& operator>> (std::istream &in, SimpleFraction &fraction) {
     fraction.set(sign, n, d);
 
     return in;
+}
+
+/** Собственный оператор endll, выводит дополнительную строку и очищает буфер */
+std::ostream& endll(std::ostream &out){
+
+    out << "\n\n";
+
+    out.clear();
+
+    return out;
 }
 
 class MixedFraction : public Fraction {
@@ -343,20 +356,24 @@ class MixedFraction : public Fraction {
 
 int main (int argc, char ** args) {
 
+    /*
+    // Кусок кода из прошлого ДЗ, на основе которого делаю текущее
+
     SimpleFraction n1(1, 3, 4);
     SimpleFraction n2(1, 2, 4);
 
-    std::cout << "Logic n1 <= n2 is: " << (n1 <= n2) << std::endl;
+    std::cout << "Logic n1 <= n2 is: " << (n1 <= n2) << endll;
 
     SimpleFraction sn = n1 / n2;
 
-    std::cout << "New fraction is: " << sn << std::endl;
+    std::cout << "(Overloaded) New fraction is: " << sn << std::endl;
+    std::cout << "(Method) New fraction is: ";
     sn.printFraction();
 
     MixedFraction n3(1, 1, 1, 4);
     MixedFraction n4(1, 1, 2, 5);
 
-    std::cout << "Logic n3 >= n4 is: " << (n3 >= n4) << std::endl;
+    std::cout << "Logic n3 >= n4 is: " << (n3 >= n4) << endll;
 
     MixedFraction mn = n3 / n4;
 
@@ -365,6 +382,7 @@ int main (int argc, char ** args) {
     MixedFraction mm = -n3;
 
     mm.printFraction();
+    */
 
     SimpleFraction f1;
     std::cout << "Enter fraction 1: ";
@@ -374,7 +392,7 @@ int main (int argc, char ** args) {
     std::cout << "Enter fraction 2: ";
     std::cin >> f2;
 
-    std::cout << f1 << " * " << f2 << " is " << f1 * f2 << '\n';
+    std::cout << f1 << " * " << f2 << " is " << f1 * f2 << endll;
 
     return 0;
 }

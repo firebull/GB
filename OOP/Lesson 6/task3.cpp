@@ -6,6 +6,9 @@
  *          вводит что-то кроме одного целочисленного значения,
  *          нужно вывести сообщение об ошибке и предложить ввести число еще раз.
  *
+ * @note    Т.к. строки типа 1n, 556hdf тоже по заданию являются некорректными,
+ *          придётся писать свой парсинг до того, как загонять строку в stoi
+ *
  * @copyright Nikita Bulaev 2019
  *
  */
@@ -19,12 +22,14 @@
 
 int main (int argc, char ** args) {
 
-    int num = 0;
-    bool correctNum = true;
+    int num = 0;            /*!< Итоговое число */
+    bool correctNum = true; /*!< Корректное ли чесло было введено */
 
     for (;;) {
         // char inStr[6] = {'\0'}; // Строка для парсинга в C-стиле
-        std::string inStr;
+
+        std::string inStr; /*!< Строка, куда пишем отпарсиный текст */
+        int len = 0;       /*!< Количество символов в строке. .size даёт кол-во байт, не подходит нам */
 
         std::cout << "Enter integer num: ";
 
@@ -39,18 +44,23 @@ int main (int argc, char ** args) {
                 }
 
                 if (inStr[i] == '-' || inStr[i] == '+') {
-                    continue;
+                    if (len == 0) {
+                        continue;
+                    }
+
+                    correctNum = false;
+                    break;
                 }
 
                 std::cerr << "Incorrect num!" << std::endl;
                 correctNum = false;
                 break;
             }
+
+            len++;
         }*/
 
         std::cin >> std::ws;  // Обрежем пробелы и прочее
-
-        int len = 0;
 
         char c;
 
@@ -67,6 +77,7 @@ int main (int argc, char ** args) {
                 if (c == '-' || c == '+') {
                     if (len == 0) {
                         inStr.push_back(c);
+                        len++;
                         continue;
                     }
                 }
@@ -76,7 +87,9 @@ int main (int argc, char ** args) {
             }
         }
 
+        // Если число некорретное, сбросить буфер и идти на новй круг
         if (len == 0 || !correctNum) {
+            std::cout << "Incorrect num!" << std::endl;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -86,6 +99,7 @@ int main (int argc, char ** args) {
 
         //num = std::atoi(inStr); // Преобразование в C-стиле
 
+        // Преобразуем число из строки в int
         num = std::stoi(inStr);
         std::cout << "Entered num is: " << num << std::endl;
 
