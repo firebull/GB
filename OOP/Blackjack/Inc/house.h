@@ -4,7 +4,15 @@
 
 class House : public GenericPlayer {
   public:
-    House();
+    House(const std::string &name = "House");
+
+    virtual ~House();
+
+    // показывает, хочет ли дилер продолжать брать карты
+    virtual bool IsHitting() const;
+
+    // переворачивает первую карту
+    void FlipFirstCard();
 };
 
-#endif // HOUSE_H
+#endif  // HOUSE_H
