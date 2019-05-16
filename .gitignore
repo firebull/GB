@@ -34,5 +34,5 @@
 *.dSYM/
 
 *.zip
-build/
-!build/.gitempty
+build*/
+!build*/.gitempty
