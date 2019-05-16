@@ -8,10 +8,15 @@ class House : public GenericPlayer {
 
     virtual ~House();
 
-    // показывает, хочет ли дилер продолжать брать карты
+    /**
+     * @brief Показывает, хочет ли дилер продолжать брать карты
+     *
+     * @return TRUE, если количество очков меньше или равно 16
+     * @return FALSE, если больше 16
+     */
     virtual bool IsHitting() const;
 
-    // переворачивает первую карту
+    /** Переворачивает первую карту */
     void FlipFirstCard();
 };
 

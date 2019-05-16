@@ -19,14 +19,9 @@ void Deck::Populate() {
     }
 }
 
-// функция переставляет указатели, расположенные в векторе m_Cards
-// с помощью функции random_shuffle() стандартной библиотеки шаблонов
 // Для использования данной библиотеки необходим файл <algorithm>
 void Deck::Shuffle() { random_shuffle(m_Cards.begin(), m_Cards.end()); }
 
-// функция добавляет в конец вектора m_Cards копию указателя
-// с помощью функции-члена Add().
-// данная функция может работать с объектами классов Player и House
 void Deck::Deal(Hand &aHand) {
     if (!m_Cards.empty()) {
         aHand.Add(m_Cards.back());
@@ -36,11 +31,10 @@ void Deck::Deal(Hand &aHand) {
     }
 }
 
-// функция может работать как с объектами типа Player, так и House
 void Deck::AdditionalCards(GenericPlayer &aGenericPlayer) {
     std::cout << std::endl;
 
-    //продолжает раздавать карты до тех пор, пока у игрока не случается
+    // Продолжает раздавать карты до тех пор, пока у игрока не случается
     // перебор или пока он хочет взять еще одну карту
     while (!(aGenericPlayer.IsBusted()) && aGenericPlayer.IsHitting()) {
         Deal(aGenericPlayer);

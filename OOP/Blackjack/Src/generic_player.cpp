@@ -8,8 +8,6 @@ bool GenericPlayer::IsBusted() const { return (GetTotal() > 21); }
 
 void GenericPlayer::Bust() const { std::cout << m_Name << " busts.\n"; }
 
-// перегружает оператор<<, чтобы получить возможность отправить
-// объект типа GenericPlayer в поток cout
 std::ostream &operator<<(std::ostream &os, const GenericPlayer &aGenericPlayer) {
     os << aGenericPlayer.m_Name << ":\t";
 

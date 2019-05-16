@@ -43,6 +43,10 @@ class GenericPlayer : public Hand {
     std::string m_Name;
 };
 
+ /**
+  * @brief Перегружает оператор<<, чтобы получить возможность
+  *        отправить объект типа GenericPlayer в поток cout
+  */
 std::ostream &operator<<(std::ostream &os, const GenericPlayer &aGenericPlayer);
 
 #endif  // GENERIC_PLAYER_H

@@ -10,15 +10,15 @@
 int main() {
     std::cout << "\t\tWelcome to Blackjack!\n\n";
 
-    int numPlayers = 0;
+    int numPlayers = 0; /*!< Количество игроков */
 
     while (numPlayers < 1 || numPlayers > 7) {
         std::cout << "How many players? (1 - 7): ";
         std::cin >> numPlayers;
     }
 
-    std::vector<std::string> names;
-    std::string              name;
+    std::vector<std::string> names; /*!< Список игроков */
+    std::string              name;  /*!< Имя игрока */
 
     for (int i = 0; i < numPlayers; ++i) {
         std::cout << "Enter player name: ";
@@ -28,9 +28,9 @@ int main() {
 
     std::cout << std::endl;
 
-    // игровой цикл
-    Game aGame(names);
-    char again = 'y';
+    // Игровой цикл
+    Game aGame(names); /*!< Основной игровой класс */
+    char again = 'y';  /*!< Команда на продолжение */
 
     while (again != 'n' && again != 'N') {
         aGame.Play();

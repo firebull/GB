@@ -10,11 +10,17 @@
 
 class Game {
   public:
+    /**
+     * @brief Конструктор этого класса принимает ссылку на вектор
+     *        строк, представляющих имена игроков - людей.
+     *
+     * @note  Конструктор создает объект класса Player для каждого имени
+    */
     Game(const std::vector<std::string> &names);
 
     ~Game();
 
-    // проводит игру в Blackjack
+    /** Проводит игру в Blackjack */
     void Play();
 
   private:

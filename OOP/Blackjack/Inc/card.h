@@ -8,8 +8,10 @@ class Card {
     enum rank { ACE = 1, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING };
     enum suit { CLUBS, DIAMONDS, HEARTS, SPADES };
 
-    // перегружаем оператор<<, чтобы можно было отправить объект
-    // типа Card в стандартный поток вывода
+    /**
+     * Перегружаем оператор<<, чтобы можно было отправить объект
+     * типа Card в стандартный поток вывода
+     */
     friend std::ostream &operator<<(std::ostream &os, const Card &aCard);
 
     Card(rank r = ACE, suit s = SPADES, bool ifu = true);
@@ -17,8 +19,12 @@ class Card {
     /** Возвращает значение карты от 1 до 11 */
     int GetValue() const;
 
-    //переворачивает карту: карта, лежащая лицом вверх,
-    // переворачивается лицом вниз и наоборот
+    /**
+     * @brief Переворачивает карту
+     *
+     * @note Карта, лежащая лицом вверх, переворачивается
+     *       лицом вниз и наоборот
+     */
     void Flip();
 
   private:
@@ -27,6 +33,8 @@ class Card {
     bool m_IsFaceUp;
 };
 
+/** Перегружает оператор<<, чтобы получить возможность отправить
+    объект типа Card в поток cout */
 std::ostream &operator<<(std::ostream &os, const Card &aCard);
 
 #endif  // CARD_H
